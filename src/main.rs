@@ -81,20 +81,30 @@ fn index(q:Option<String>) -> Html<String>
         query_value.push_str(&query);
         for (i, index) in indexes.iter().enumerate()
         {
-            let response = reqwest::blocking::get(index.url.join(&query_str).unwrap().to_string()).unwrap();
-            if let Ok(json) = response.json::<PubmedResponse>()
+            if let Ok(response) = reqwest::blocking::get(index.url.join(&query_str).unwrap().to_string())
             {
-                labels.push_str(&format!(r#"<label for="tab{}">{} {}</label>"#, i+1, index.name, json.num_hits));
-
-                let mut hits_list = String::new();
-                for hit in json.hits
+                if let Ok(json) = response.json::<PubmedResponse>()
                 {
-                    hits_list.push_str(&format!("<h4>{}</h4>{}<br>\n",
-                                                hit.doc.title.first().unwrap_or(&String::from("(no title)")),
-                                                hit.doc.body.join("<br>")
-                                                ));
+                    labels.push_str(&format!(r#"<label for="tab{}">{} {}</label>"#, i+1, index.name, json.num_hits));
+
+                    let mut hits_list = String::new();
+                    for hit in json.hits
+                    {
+                        hits_list.push_str(&format!("<h4>{}</h4>{}<br>\n",
+                                                    hit.doc.title.first().unwrap_or(&String::from("(no title)")),
+                                                    hit.doc.body.join("<br>")
+                                                    ));
+                    }
+                    results.push_str(&format!(r#"<div class="tab{}">{hits_list}</div>"#, i + 1));
                 }
-                results.push_str(&format!(r#"<div class="tab{}">{hits_list}</div>"#, i + 1));
+                else
+                {
+                    results.push_str(&format!(r#"<div class="tab{}">no hits</div>"#, i + 1));
+                }
+            }
+            else
+            {
+                results.push_str(&format!(r#"<div class="tab{}">no response from index</div>"#, i + 1));
             }
         }
 
