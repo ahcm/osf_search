@@ -102,6 +102,7 @@ fn index(q:Option<&RawStr>) -> Html<String>
                 }
                 else
                 {
+                    labels.push_str(&format!(r#"<label for="tab{}">{} {}</label>"#, i+1, index.name, 0));
                     results.push_str(&format!(r#"<div class="tab{}">no hits</div>"#, i + 1));
                 }
             }
