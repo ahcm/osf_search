@@ -70,12 +70,15 @@ fn index(q:Option<String>) -> Html<String>
         Index{name: String::from("wikipedia"), url : Url::parse("https://osf.creative-memory.eu/osf/api/0.0/index/cm/wikipedia/en/tantivy/api/0.0").unwrap()}
     ];
 
+    let mut query_value = String::new();
+
     let mut results = String::new();
     let mut labels = String::new();
     if let Some(query) = q
     {
         let mut query_str = String::from("?q=");
         query_str.push_str(&query);
+        query_value.push_str(&query);
         for (i, index) in indexes.iter().enumerate()
         {
             let response = reqwest::blocking::get(index.url.join(&query_str).unwrap().to_string()).unwrap();
@@ -105,7 +108,7 @@ fn index(q:Option<String>) -> Html<String>
     <body margin="5%">
         <h3>OSF Search</h3>
         <form action="" method="get" style="text-align:center;">
-            <input name="q" id="q" type="text" width="400" />
+            <input name="q" id="q" type="text" width="400" value="{query_value}" />
             <input name="search" id="search" type="submit" value="search" />
         </form>
 
