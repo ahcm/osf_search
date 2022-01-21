@@ -1,0 +1,14 @@
+[package]
+name = "osf_search"
+version = "0.0.1"
+publish = false
+edition = "2021"
+
+[dependencies]
+#rocket = "0.5.0-rc.1"
+rocket = "*"
+rand = "0.8.4"
+url = "*"
+reqwest = {version = "*", features = ["blocking", "json"]}
+serde = { version = "*", features = ["derive"] }
+serde_json = "*"
