@@ -102,7 +102,7 @@ fn index(q:Option<String>) -> Html<String>
     </head>
     <body margin="5%">
         <h3>OSF Search</h3>
-        <form action="" method="get">
+        <form action="" method="get" style="text-align:center;">
             <input name="q" id="q" type="text" width="400" />
             <input name="search" id="search" type="submit" value="search" />
         </form>
