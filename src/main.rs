@@ -2,11 +2,12 @@
 #[macro_use] extern crate rocket;
 
 extern crate reqwest;
-use reqwest::blocking::Response;
-use rocket::response::content::{Json, Html};
+//use reqwest::blocking::Response;
+use rocket::response::content::Html;
+use rocket::http::RawStr;
 
 extern crate url;
-use url::{Url, ParseError};
+use url::Url;
 
 extern crate serde;
 
@@ -63,7 +64,7 @@ pub struct Timing {
 
 
 #[get("/?<q>")]
-fn index(q:Option<String>) -> Html<String>
+fn index(q:Option<&RawStr>) -> Html<String>
 {
     let indexes = vec![
         Index{name: String::from("pubmed"),   url : Url::parse("https://osf.creative-memory.eu/osf/api/0.0/index/cm/pubmed/en/tantivy/api/0.0").unwrap()},
@@ -77,8 +78,8 @@ fn index(q:Option<String>) -> Html<String>
     if let Some(query) = q
     {
         let mut query_str = String::from("?q=");
-        query_str.push_str(&query);
-        query_value.push_str(&query);
+        query_str.push_str(&query.html_escape());
+        query_value.push_str(&query.html_escape());
         for (i, index) in indexes.iter().enumerate()
         {
             if let Ok(response) = reqwest::blocking::get(index.url.join(&query_str).unwrap().to_string())
@@ -90,9 +91,11 @@ fn index(q:Option<String>) -> Html<String>
                     let mut hits_list = String::new();
                     for hit in json.hits
                     {
+                        let title = RawStr::from_str(hit.doc.title.first().unwrap());
+                        let body = hit.doc.body.iter().map(|b| RawStr::from_str(b).html_escape()).collect::<Vec<_>>().join("<br>");
                         hits_list.push_str(&format!("<h4>{}</h4>{}<br>\n",
-                                                    hit.doc.title.first().unwrap_or(&String::from("(no title)")),
-                                                    hit.doc.body.join("<br>")
+                                                    title.html_escape(),
+                                                    body
                                                     ));
                     }
                     results.push_str(&format!(r#"<div class="tab{}">{hits_list}</div>"#, i + 1));
