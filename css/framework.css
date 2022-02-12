@@ -1,0 +1,125 @@
+@charset "UTF-8";
+/* paddings and margins for box and text elements are set via the new css viewport units:
+ * vw = viewport-width, vh = viewport-height, vmin = viewport-cover, rem = root font size element.
+ * property ordering: display - positioning - box model - colors and typography - other.
+ */
+
+/* HEADER */
+    #header {
+        padding-top: 1.2rem;
+        padding-bottom: 0.5rem;
+    }
+    #header > div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-end;
+        max-width: var(--max-width);
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1.15rem;
+    }
+    #col-logo img {
+        width: 13rem;
+    }
+    #col-search span {
+        position: absolute;
+        top: 0.7rem;
+        left: 0.8rem;
+        z-index: 2;
+        font-size: 1.25rem;
+    }
+    #col-link a {
+        color: var(--accent);
+        font-size: 0.9rem;
+    }
+
+
+/* CONTENT */
+    #content {
+        max-width: var(--max-width);
+        margin-left: auto;
+        margin-right: auto;
+        border-top: 1px solid var(--gray);
+    }
+
+    #provider {
+        float: left;
+        min-width: 17rem;
+    }
+    #provider label {
+        display: block;
+    }
+    #provider .hits {
+        float: right;
+    }
+    #results {
+        overflow: auto;
+        border-left: 1px solid var(--gray);
+    }
+    #results h4:first-of-type {
+        margin-top: 1.15rem;
+    }
+    #results .pagination {
+        margin: 1rem;
+        text-align: center;
+    }
+    #results .page-left, #results .page-right {
+        font-size: 1.25rem;
+        color: rgba(0, 0, 0, 0.5);
+    }
+    #results .pages {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        border: 1px solid var(--gray);
+        border-radius: var(--radius);
+    }
+
+/* tabs with css */
+    #content > input, #content #results > div { 
+        display: none;
+    }
+    #content #results > div {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        padding-bottom: 1.5rem;
+        line-height: 1.5rem;
+        letter-spacing: 0.01rem;
+    }
+/* general sibling combinator */
+    #tab1:checked ~ #results .tab1, 
+    #tab2:checked ~ #results .tab2,
+    #tab3:checked ~ #results .tab3 { 
+        display: block;
+    }
+
+/* tab styling */
+    #content #provider label {
+        padding: 1.15rem;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        transition: all 0.15s ease-in-out;
+    }
+    /* on hover */
+    #provider label:hover { 
+        color: var(--accent);
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+    /* on click
+    #provider label:active {
+        background-color: red;
+    } */
+    /* active */
+    #tab1:checked ~ #provider label[for="tab1"] {
+        border-bottom: 1px solid var(--gray);
+        color: var(--accent);
+    }
+    #tab2:checked ~ #provider label[for="tab2"],
+    #tab3:checked ~ #provider label[for="tab3"] {
+        border-top: 1px solid var(--gray);
+        border-bottom: 1px solid var(--gray);
+        color: var(--accent);
+    }
+    

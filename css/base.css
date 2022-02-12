@@ -1,0 +1,119 @@
+@charset "UTF-8";
+/* paddings and margins for box and text elements are set via the new css viewport units:
+ * vw = viewport-width, vh = viewport-height, vmin = viewport-cover, rem = root font size element.
+ * property ordering: display - positioning - box model - colors and typography - other.
+ */
+
+/* global styles */
+    :root {
+        --gray: rgba(0, 0, 0, 0.2);
+        --black: rgba(51, 51, 51, 1);
+        --white: rgba(255, 255, 255, 1);
+        --accent: rgba(0, 131, 161, 1);
+        --font-primary: 'Fira Sans', Helvetica, Arial, sans-serif;
+        --radius: 2rem;
+        --button-width: 4.5rem;
+        --max-width: 1600px;
+    }
+
+    html, body {
+        height: auto;
+        width: 100%;
+        position: relative;
+        font-family: var(--font-primary);
+        font-size: 16px;
+        line-height: 1.56rem;
+        letter-spacing: 0;
+        text-align: left;
+        word-break: keep-all;
+        color: var(--black);
+        background-color: rgba(255, 255, 255, 1);
+        z-index: 1;
+    }
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+    }
+    * { 
+        outline-style: none; 
+        box-sizing: border-box; 
+    }
+    a {
+        font-family: var(--font-primary);
+        text-decoration: none;
+        color: var(--black);
+        transition: all 0.15s ease-in-out;
+    }
+    a:hover, a:focus {
+        color: var(--accent);
+    }
+    img, object {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        border: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        font-size: 1rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.25rem;
+    }
+    i {
+        font-style: inherit;
+    }
+    nav {
+        display: block;
+    }
+
+/* search box */
+    form {
+        position: relative;
+        width: 30vw;
+        min-width: 20rem;
+        max-width: 30rem;
+        background: var(--accent);
+        border-radius: var(--radius);
+    }
+    input, button {
+        height: 3rem;
+        font-size: 1.1rem;
+    }
+    input[type=search] {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        padding-left: 2.7rem;
+        border: 1px solid var(--gray);
+        border-radius: var(--radius);
+        transition: all 0.25s ease-in-out;
+    }
+    input:focus {
+        border-color: var(--accent);
+    }
+    button {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 0;
+        width: var(--button-width);
+        padding-right: 0.6rem;
+        border: 1px solid var(--accent);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        font-weight: bold;
+        color: var(--white);
+        background: var(--accent);
+        cursor: pointer;
+    }
+    input:not(:placeholder-shown) {
+        border-right: 0;
+        border-radius: var(--radius) 0 0 var(--radius);
+        width: calc(100% - var(--button-width));
+    }
+    /* adjacent sibling combinator */
+    input:not(:placeholder-shown) + button {
+        display: block;
+    }
