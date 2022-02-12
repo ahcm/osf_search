@@ -5,6 +5,7 @@ extern crate reqwest;
 //use reqwest::blocking::Response;
 use rocket::response::content::Html;
 use rocket::http::RawStr;
+use rocket_contrib::serve::StaticFiles;
 
 extern crate url;
 use url::Url;
@@ -114,32 +115,43 @@ fn index(q:Option<&RawStr>) -> Html<String>
 
     }
     Html(format!(
-    r#"<html>
+    r#"<!DOCTYPE html>
+    <html>
     <head>
     <title>OSF Search</title>
-    <link href="https://osf.creative-memory.eu/osf_search/tabs.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link href="css/framework.css" rel="stylesheet">
     </head>
     <body margin="5%">
-        <h3>OSF Search</h3>
-        <form action="" method="get" style="text-align:center;">
-            <input name="q" id="q" type="text" width="400" value="{query_value}" />
-            <input name="search" id="search" type="submit" value="search" />
-        </form>
-
-        <div class="tabbed">
-           <input checked="checked" id="tab1" type="radio" name="tabs" />
-           <input id="tab2" type="radio" name="tabs" />
-           <input id="tab3" type="radio" name="tabs" />
-
-           <nav>
-             {labels}
-           </nav>
-           
-           <figure>
-             {results}
-           </figure>
+        <div id="header">
+          <div>
+            <div id="col-logo">
+                <img src="img/osf-logo.png" alt="OSF Search" srcset="img/osf-logo.svg">
+            </div>
+            <div id="col-search">
+                <form action="" method="get">
+                    <span aria-hidden="true">&#128269;</span>
+                    <input name="q" id="q" type="search" value="" placeholder="Search..." />
+                    <button name="search" id="search" type="submit">Go</button>  
+                </form>
+            </div>
+            <div id="col-link">
+                <a href="https://opensearchfoundation.org/" target="_blank">OpenSearchFoundation.org</a>
+            </div>
+          </div>
         </div>
 
+        <div id="content">
+            <input checked="checked" id="tab1" type="radio" name="tabs" />
+            <input id="tab2" type="radio" name="tabs" />
+            
+            <nav id="provider">
+             {labels}
+            </nav>
+            
+            <div id="results">
+             {results}
+            </div>
     </body>
 </html>
 "#
@@ -149,7 +161,10 @@ fn index(q:Option<&RawStr>) -> Html<String>
 //#[launch]
 fn rocket() -> rocket::Rocket
 {
-    rocket::ignite().mount("/", routes![index])
+    rocket::ignite()
+        .mount("/css", StaticFiles::from("css"))
+        .mount("/img", StaticFiles::from("img"))
+        .mount("/", routes![index])
 }
 
 fn main()
