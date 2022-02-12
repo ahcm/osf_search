@@ -131,7 +131,7 @@ fn index(q:Option<&RawStr>) -> Html<String>
             <div id="col-search">
                 <form action="" method="get">
                     <span aria-hidden="true">&#128269;</span>
-                    <input name="q" id="q" type="search" value="" placeholder="Search..." />
+                    <input name="q" id="q" type="search" value="{query_value}" placeholder="Search..." />
                     <button name="search" id="search" type="submit">Go</button>  
                 </form>
             </div>
