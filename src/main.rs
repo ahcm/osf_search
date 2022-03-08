@@ -87,7 +87,7 @@ fn index(q:Option<&RawStr>) -> Html<String>
             {
                 if let Ok(json) = response.json::<PubmedResponse>()
                 {
-                    labels.push_str(&format!(r#"<label for="tab{}">{} {}</label>"#, i+1, index.name, json.num_hits));
+                    labels.push_str(&format!(r#"<label for="tab{}"><span class="engine">{}</span> <span class="hits">{}</span></label>"#, i+1, index.name, json.num_hits));
 
                     let mut hits_list = String::new();
                     for hit in json.hits
@@ -103,7 +103,7 @@ fn index(q:Option<&RawStr>) -> Html<String>
                 }
                 else
                 {
-                    labels.push_str(&format!(r#"<label for="tab{}">{} {}</label>"#, i+1, index.name, 0));
+                    labels.push_str(&format!(r#"<label for="tab{}"><span class="engine">{}</span> <span class="hits">{}</span></label>"#, i+1, index.name, 0));
                     results.push_str(&format!(r#"<div class="tab{}">no hits</div>"#, i + 1));
                 }
             }
@@ -115,16 +115,23 @@ fn index(q:Option<&RawStr>) -> Html<String>
 
     }
     Html(format!(
-    r#"<!DOCTYPE html>
-    <html>
+    r#"
+<!DOCTYPE html>
+<html>
     <head>
-    <title>OSF Search</title>
+        <title>OSF Search</title>
+        <meta charset="UTF-8">
+        <meta name="author" content="github.com/ahcm">
+        <meta name="description" content="OSF Search">
+        <meta name="keywords" content="Open Search Foundation Search">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
         <link href="css/base.css" rel="stylesheet">
         <link href="css/framework.css" rel="stylesheet">
+        <link href="css/responsive.css" rel="stylesheet">
     </head>
-    <body margin="5%">
-        <div id="header">
-          <div>
+    <body>
+        <div id="header"><div>
             <div id="col-logo">
                 <img src="img/osf-logo.png" alt="OSF Search" srcset="img/osf-logo.svg">
             </div>
@@ -138,20 +145,20 @@ fn index(q:Option<&RawStr>) -> Html<String>
             <div id="col-link">
                 <a href="https://opensearchfoundation.org/" target="_blank">OpenSearchFoundation.org</a>
             </div>
-          </div>
-        </div>
-
+        </div></div>
+        
         <div id="content">
             <input checked="checked" id="tab1" type="radio" name="tabs" />
             <input id="tab2" type="radio" name="tabs" />
             
             <nav id="provider">
-             {labels}
+                {labels}
             </nav>
             
             <div id="results">
-             {results}
+                {results}
             </div>
+        </div>
     </body>
 </html>
 "#
