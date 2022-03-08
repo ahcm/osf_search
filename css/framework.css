@@ -17,14 +17,21 @@
         max-width: var(--max-width);
         margin-left: auto;
         margin-right: auto;
-        padding: 1.15rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        padding-left: 1.15rem;
+        padding-right: 1.15rem;
+    }
+    #header > div > div {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
     }
     #col-logo img {
         width: 13rem;
     }
     #col-search span {
         position: absolute;
-        top: 0.7rem;
+        top: 0.73rem;
         left: 0.8rem;
         z-index: 2;
         font-size: 1.25rem;
@@ -82,9 +89,9 @@
         display: none;
     }
     #content #results > div {
+        padding-bottom: 1.5rem;
         padding-left: 1.5rem;
         padding-right: 1.5rem;
-        padding-bottom: 1.5rem;
         line-height: 1.5rem;
         letter-spacing: 0.01rem;
     }
@@ -96,11 +103,16 @@
     }
 
 /* tab styling */
-    #content #provider label {
-        padding: 1.15rem;
-        border-top: 1px solid transparent;
-        border-bottom: 1px solid transparent;
+    #provider label {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        padding-left: 1.3rem;
+        padding-right: 1.15rem;
+        border-bottom: 1px solid var(--gray);
         transition: all 0.15s ease-in-out;
+    }
+    #provider span {
+        display: inline-block;
     }
     /* on hover */
     #provider label:hover { 
@@ -113,13 +125,18 @@
     } */
     /* active */
     #tab1:checked ~ #provider label[for="tab1"] {
-        border-bottom: 1px solid var(--gray);
+        padding-top: 1.15rem;
+        padding-bottom: 1.15rem;
+        padding-left: 1.3rem;
+        padding-right: 1.15rem;
         color: var(--accent);
     }
     #tab2:checked ~ #provider label[for="tab2"],
     #tab3:checked ~ #provider label[for="tab3"] {
-        border-top: 1px solid var(--gray);
-        border-bottom: 1px solid var(--gray);
+        padding-top: 1.15rem;
+        padding-bottom: 1.15rem;
+        padding-left: 1.3rem;
+        padding-right: 1.15rem;
         color: var(--accent);
     }
     
