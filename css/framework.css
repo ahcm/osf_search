@@ -83,6 +83,52 @@
         border: 1px solid var(--gray);
         border-radius: var(--radius);
     }
+    #results .result-short {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    #results .result-short:before {
+        content: '';
+        display: block;
+        width: 45%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+        border-bottom: 1px solid var(--gray);
+    }
+    #results .result-short:first-child:before {
+        display: none;
+    }
+    
+/* MODALS with css */
+    #results .result-long {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 999;
+    }
+    #results .result-long > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-height: 100vh;
+        width: 80vw;
+        padding: 2rem;
+        overflow-y: auto;
+        border-radius: 1rem;
+        background-color: var(--white);
+    }
+    #results .result-long:target {
+        display: block;
+    }
 
 /* tabs with css */
     #content > input, #content #results > div { 
@@ -106,13 +152,16 @@
     #provider label {
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
-        padding-left: 1.3rem;
+        padding-left: 0.8rem;
         padding-right: 1.15rem;
         border-bottom: 1px solid var(--gray);
         transition: all 0.15s ease-in-out;
     }
     #provider span {
         display: inline-block;
+    }
+    #provider span.engine {
+        padding-left: 0.5rem;
     }
     /* on hover */
     #provider label:hover { 
@@ -124,19 +173,18 @@
         background-color: red;
     } */
     /* active */
-    #tab1:checked ~ #provider label[for="tab1"] {
+    #tab1:checked ~ #provider label[for="tab1"],
+    #tab2:checked ~ #provider label[for="tab2"],
+    #tab3:checked ~ #provider label[for="tab3"]{
         padding-top: 1.15rem;
         padding-bottom: 1.15rem;
         padding-left: 1.3rem;
         padding-right: 1.15rem;
         color: var(--accent);
     }
-    #tab2:checked ~ #provider label[for="tab2"],
-    #tab3:checked ~ #provider label[for="tab3"] {
-        padding-top: 1.15rem;
-        padding-bottom: 1.15rem;
-        padding-left: 1.3rem;
-        padding-right: 1.15rem;
-        color: var(--accent);
+    #tab1:checked ~ #provider label[for="tab1"] .engine,
+    #tab2:checked ~ #provider label[for="tab2"] .engine,
+    #tab3:checked ~ #provider label[for="tab3"] .engine {
+         border-left: 2px solid var(--accent);
     }
     
