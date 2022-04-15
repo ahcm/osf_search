@@ -63,7 +63,6 @@ pub struct Timing {
 }
 
 
-
 #[get("/?<q>")]
 fn index(q:Option<&RawStr>) -> Html<String>
 {
@@ -90,14 +89,28 @@ fn index(q:Option<&RawStr>) -> Html<String>
                     labels.push_str(&format!(r#"<label for="tab{}"><span class="engine">{}</span> <span class="hits">{}</span></label>"#, i+1, index.name, json.num_hits));
 
                     let mut hits_list = String::new();
-                    for hit in json.hits
+                    for (rank,hit) in json.hits.iter().enumerate()
                     {
-                        let title = RawStr::from_str(hit.doc.title.first().unwrap());
+                        let title = RawStr::from_str(hit.doc.title.first().unwrap()).html_escape();
                         let body = hit.doc.body.iter().map(|b| RawStr::from_str(b).html_escape()).collect::<Vec<_>>().join("<br>");
-                        hits_list.push_str(&format!("<h4>{}</h4>{}<br>\n",
-                                                    title.html_escape(),
-                                                    body
-                                                    ));
+                        hits_list.push_str(
+                           &format!(
+                            r##"
+                            <span class="result-short">
+                              <a href="#result-long-{i}-{rank}">
+                                <h4>{title}</h4>
+                                {body}
+                              </a>
+                              <div id="result-long-{i}-{rank}" class="result-long">
+                              <div>
+                                <a href="#" title="close" class="result-close">close</a>
+                                <h4>{title}</h4>
+                                {body}
+                              </div>
+                              </div>
+                            </span>
+                            "##
+                           ));
                     }
                     results.push_str(&format!(r#"<div class="tab{}">{hits_list}</div>"#, i + 1));
                 }
@@ -125,7 +138,7 @@ fn index(q:Option<&RawStr>) -> Html<String>
         <meta name="description" content="OSF Search">
         <meta name="keywords" content="Open Search Foundation Search">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon">
         <link href="css/base.css" rel="stylesheet">
         <link href="css/framework.css" rel="stylesheet">
         <link href="css/responsive.css" rel="stylesheet">
