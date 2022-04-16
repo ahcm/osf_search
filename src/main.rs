@@ -69,13 +69,15 @@ fn index(q:Option<&RawStr>) -> Html<String>
 {
     let indexes = vec![
         Index{name: String::from("pubmed"),   url : Url::parse("https://osf.creative-memory.eu/osf/api/0.0/index/cm/pubmed/en/tantivy/api/0.0").unwrap()},
-        Index{name: String::from("wikipedia"), url : Url::parse("https://osf.creative-memory.eu/osf/api/0.0/index/cm/wikipedia/en/tantivy/api/0.0").unwrap()}
+        Index{name: String::from("wikipedia"), url : Url::parse("https://osf.creative-memory.eu/osf/api/0.0/index/cm/wikipedia/en/tantivy/api/0.0").unwrap()},
+        Index{name: String::from("wikipedia-de-abstract"), url : Url::parse("https://osf.creative-memory.eu/osf/api/0.0/index/cm/wikipedia/de-abstract/tantivy/api/0.0").unwrap()},
     ];
 
     let mut query_value = String::new();
 
     let mut results = String::new();
     let mut labels = String::new();
+    let mut tabs = String::new();
     if let Some(query) = q
     {
         let mut query_str = String::from("?q=");
@@ -87,7 +89,16 @@ fn index(q:Option<&RawStr>) -> Html<String>
             {
                 if let Ok(json) = response.json::<PubmedResponse>()
                 {
-                    labels.push_str(&format!(r#"<label for="tab{}"><span class="engine">{}</span> <span class="hits">{}</span></label>"#, i+1, index.name, json.num_hits));
+                    tabs.push_str(&format!(
+                            r#"<input id="tab{}" type="radio" name="tabs" />"#,
+                            i + 1));
+            
+                    labels.push_str(&format!(
+                            r#"<label for="tab{}">
+                                 <span class="engine">{}</span>
+                                 <span class="hits">{}</span>
+                               </label>"#,
+                               i + 1, index.name, json.num_hits));
 
                     let mut hits_list = String::new();
                     for (rank,hit) in json.hits.iter().enumerate()
@@ -169,9 +180,8 @@ fn index(q:Option<&RawStr>) -> Html<String>
         </div></div>
         
         <div id="content">
-            <input checked="checked" id="tab1" type="radio" name="tabs" />
-            <input id="tab2" type="radio" name="tabs" />
-            
+            {tabs}
+
             <nav id="provider">
                 {labels}
             </nav>
