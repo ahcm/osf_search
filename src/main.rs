@@ -46,6 +46,7 @@ pub struct Doc {
     pub body: Vec<String>,
     pub journal: Option<Vec<String>>,
     pub title: Vec<String>,
+    pub url: Option<Vec<String>>,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -93,12 +94,19 @@ fn index(q:Option<&RawStr>) -> Html<String>
                     {
                         let title = RawStr::from_str(hit.doc.title.first().unwrap()).html_escape();
                         let body = hit.doc.body.iter().map(|b| RawStr::from_str(b).html_escape()).collect::<Vec<_>>().join("<br>");
+                        let mut journal = &index.name;
+                        if let Some(journals) = &hit.doc.journal
+                        {
+                            journal = journals.first().unwrap();
+                        }
+                        let url = hit.doc.url.as_ref().unwrap_or(&vec![]).join("; ");
                         hits_list.push_str(
                            &format!(
                             r##"
                             <span class="result-short">
+                              <h4><a href="{url}">{title}</a></h4>
+                              <div><small>{journal}</small></div>
                               <a href="#result-long-{i}-{rank}">
-                                <h4>{title}</h4>
                                 {body}
                               </a>
                               <div id="result-long-{i}-{rank}" class="result-long">
