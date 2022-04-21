@@ -114,15 +114,16 @@ fn index(q:Option<&RawStr>) -> Html<String>
                         hits_list.push_str(
                            &format!(
                             r##"
-                            <span class="result-short">
+                            <span class="result">
                               <h4><a href="{url}">{title}</a></h4>
                               <div><small>{journal}</small></div>
                               <a href="#result-long-{i}-{rank}">
                                 {body}
                               </a>
                               <div id="result-long-{i}-{rank}" class="result-long">
+                              <a href="#" class="overlay-close"></a>
                               <div>
-                                <a href="#" title="close" class="result-close">close</a>
+                                <a href="#" title="close" class="modal-close">close</a>
                                 <h4>{title}</h4>
                                 {body}
                               </div>

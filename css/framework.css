@@ -49,7 +49,7 @@
         margin-right: auto;
         border-top: 1px solid var(--gray);
     }
-
+    
     #provider {
         float: left;
         min-width: 17rem;
@@ -60,50 +60,56 @@
     #provider .hits {
         float: right;
     }
+    
     #results {
         overflow: auto;
         border-left: 1px solid var(--gray);
     }
-    #results h4:first-of-type {
+    #results > div {
+        padding-bottom: 1.5rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        line-height: 1.5rem;
+        letter-spacing: 0.01rem;
+    }
+    #results .result > a > h4:first-of-type {
         margin-top: 1.15rem;
     }
-    #results .pagination {
-        margin: 1rem;
-        text-align: center;
-    }
-    #results .page-left, #results .page-right {
-        font-size: 1.25rem;
-        color: rgba(0, 0, 0, 0.5);
-    }
-    #results .pages {
-        padding-top: 0.25rem;
-        padding-bottom: 0.25rem;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        border: 1px solid var(--gray);
-        border-radius: var(--radius);
-    }
-    #results .result-short {
+    #results .result {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
-    #results .result-short:before {
+    #results .result h4 {
+        color: var(--black);
+    }
+    #results .result:before {
         content: '';
         display: block;
-        width: 45%;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 2rem;
-        margin-bottom: 0.75rem;
-        border-bottom: 1px solid var(--gray);
+        height: 1px;
+        width: 80%;
+        margin-top: 1rem;
+        background: linear-gradient(90deg, var(--gray) 66%, rgba(255, 255, 255, 1) 100%);
     }
-    #results .result-short:first-child:before {
+    #results .result:first-child:before {
         display: none;
     }
     
-/* MODALS with css */
+    #results .pagination {
+        margin-top: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    #results .pages {
+        padding-left: 0.3rem;
+        padding-right: 0.3rem;
+    }
+    #results .page-left, #results .page-right {
+        font-size: 1.25rem;
+    }
+
+    
+/* MODAL window with css */
     #results .result-long {
         display: none;
         position: fixed;
@@ -111,36 +117,49 @@
         right: 0;
         bottom: 0;
         left: 0;
-        background-color: rgba(0, 0, 0, 0.6);
         z-index: 999;
+    }
+    #results .result-long:target {
+        display: block;
     }
     #results .result-long > div {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        max-height: 100vh;
+        max-height: 80vh;
         width: 80vw;
-        padding: 2rem;
+        max-width: var(--max-width);
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
         overflow-y: auto;
         border-radius: 1rem;
         background-color: var(--white);
     }
-    #results .result-long:target {
+    #results .result-long .overlay-close {
         display: block;
+        height: 100vh;
+        width: 100vw;
+        transition: all 0s ease 0s;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+    #results .result-long h4 {
+       margin-top: 0rem;
+    }
+    #results .modal-close {
+        display: block;
+        font-size: 1.15rem;
+        text-align: right;
     }
 
-/* tabs with css */
+
+/* TABS with css */
     #content > input, #content #results > div { 
         display: none;
     }
-    #content #results > div {
-        padding-bottom: 1.5rem;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-        line-height: 1.5rem;
-        letter-spacing: 0.01rem;
-    }
+
 /* general sibling combinator */
     #tab1:checked ~ #results .tab1, 
     #tab2:checked ~ #results .tab2,
@@ -187,4 +206,4 @@
     #tab3:checked ~ #provider label[for="tab3"] .engine {
          border-left: 2px solid var(--accent);
     }
-    
+
