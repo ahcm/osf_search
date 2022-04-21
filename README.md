@@ -5,10 +5,15 @@ OSF Search example frontend
 
 Install Rust.
 
-Run:
+Run once:
 ```
 $ rustup default nightly # needed only once
+```
 
+Configure Rocket, see below.
+
+Run server
+```
 $ cargo run --release
     Finished release [optimized] target(s) in 0.22s
      Running `target/release/osf_search`
