@@ -123,7 +123,7 @@ fn index(q:Option<&RawStr>) -> Html<String>
                               <div id="result-long-{i}-{rank}" class="result-long">
                               <a href="#" class="overlay-close"></a>
                               <div>
-                                <a href="#" title="close" class="modal-close">close</a>
+                                <a href="#" title="close" class="modal-close">&#10005;</a>
                                 <h4>{title}</h4>
                                 {body}
                               </div>
