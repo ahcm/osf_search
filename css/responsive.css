@@ -23,12 +23,13 @@
         padding-top: 0.75rem;
         padding-bottom: 0.35rem;
     }
-    #header > div {
-        display: block;
+    #header #col-logo {
+        flex-basis: 100%;
+        text-align: center;
     }
     #header > div > div {
-        display: block;
-        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
     }
     #header #col-link {
         display: none;
